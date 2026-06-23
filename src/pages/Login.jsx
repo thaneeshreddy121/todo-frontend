@@ -20,6 +20,9 @@ function Login() {
         }
       );
 
+      // ✅ IMPORTANT FIX: store user for multi-user system
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
       alert(res.data.message);
 
       navigate("/home");
@@ -49,10 +52,7 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button
-        className="btn btn-primary"
-        onClick={handleLogin}
-      >
+      <button className="btn btn-primary" onClick={handleLogin}>
         Login
       </button>
 

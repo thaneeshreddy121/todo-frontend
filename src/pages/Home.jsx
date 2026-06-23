@@ -16,38 +16,52 @@ function Home() {
 
   const navigate = useNavigate();
 
-  // Load data on page load
+  // ✅ GET LOGGED IN USER
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
+    if (!user) {
+      navigate("/");
+      return;
+    }
+
     fetchTodos();
     fetchHistory();
   }, []);
 
-  // GET TODOS
+  // ---------------- TODOS (USER FILTERED)
   const fetchTodos = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/api/todos`);
+      const res = await axios.get(
+        `${BASE_URL}/api/todos?userId=${user._id}`
+      );
+
       setTodoItems(res.data);
     } catch (error) {
       console.log("Error fetching todos:", error);
     }
   };
 
-  // GET HISTORY
+  // ---------------- HISTORY (USER FILTERED)
   const fetchHistory = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/api/todos/history`);
+      const res = await axios.get(
+        `${BASE_URL}/api/todos/history?userId=${user._id}`
+      );
+
       setHistory(res.data);
     } catch (error) {
       console.log("Error fetching history:", error);
     }
   };
 
-  // LOGOUT
+  // ---------------- LOGOUT
   const handleLogout = () => {
+    localStorage.removeItem("user");
     navigate("/");
   };
 
-  // CREATE TODO
+  // ---------------- CREATE TODO (ADD USER ID)
   const handleNewItem = async (itemName, itemDueDate) => {
     if (!itemName?.trim() || !itemDueDate) {
       alert("Please enter task and date");
@@ -58,6 +72,7 @@ function Home() {
       await axios.post(`${BASE_URL}/api/todos`, {
         name: itemName,
         dueDate: itemDueDate,
+        userId: user._id,
       });
 
       fetchTodos();
@@ -66,7 +81,7 @@ function Home() {
     }
   };
 
-  // DELETE TODO
+  // ---------------- DELETE TODO
   const handleDeleteItem = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/api/todos/${id}`);
@@ -78,7 +93,7 @@ function Home() {
     }
   };
 
-  // EDIT TODO (frontend only)
+  // ---------------- EDIT TODO (LOCAL ONLY)
   const handleEditItem = (id) => {
     const todo = todoItems.find((item) => item._id === id);
     if (!todo) return;
