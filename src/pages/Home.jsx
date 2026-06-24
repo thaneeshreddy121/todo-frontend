@@ -94,20 +94,32 @@ function Home() {
   };
 
   // ---------------- EDIT TODO (LOCAL ONLY)
-  const handleEditItem = (id) => {
-    const todo = todoItems.find((item) => item._id === id);
-    if (!todo) return;
+  const handleEditItem = async (id) => {
+  const todo = todoItems.find((item) => item._id === id);
 
-    const newName = prompt("Enter new task name", todo.name);
+  if (!todo) return;
 
-    if (!newName || !newName.trim()) return;
+  const newName = prompt(
+    "Enter new task name",
+    todo.name
+  );
 
-    setTodoItems((prev) =>
-      prev.map((item) =>
-        item._id === id ? { ...item, name: newName } : item
-      )
+  if (!newName || !newName.trim()) return;
+
+  try {
+    await axios.put(
+      `${BASE_URL}/api/todos/${id}`,
+      {
+        name: newName,
+        dueDate: todo.dueDate,
+      }
     );
-  };
+
+    fetchTodos();
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <div className="d-flex">
