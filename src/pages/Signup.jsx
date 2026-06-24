@@ -15,6 +15,20 @@ function Signup() {
   const navigate = useNavigate();
 
   const handleSignup = async () => {
+
+
+if (
+  !name.trim() ||
+  !email.trim() ||
+  !password.trim() ||
+  !securityQuestion.trim() ||
+  !securityAnswer.trim()
+) {
+  alert("Please fill all fields");
+  return;
+}
+
+
     try {
       const res = await axios.post(
         `${BASE_URL}/api/auth/signup`,
@@ -30,9 +44,13 @@ function Signup() {
       alert(res.data.message);
       navigate("/");
     } catch (error) {
-      alert(error.response?.data?.message || "Signup Failed");
-      console.log(error);
-    }
+  alert(
+    error.response?.data?.message ||
+    "Signup Failed"
+  );
+
+  console.log(error);
+}
   };
 
   return (

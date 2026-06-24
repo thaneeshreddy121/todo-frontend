@@ -13,6 +13,7 @@ function Home() {
   const [todoItems, setTodoItems] = useState([]);
   const [history, setHistory] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const navigate = useNavigate();
 
@@ -121,6 +122,45 @@ function Home() {
   }
 };
 
+
+const handleEditProfile = async () => {
+  const newName = prompt(
+    "Enter Name",
+    user.name
+  );
+
+  if (!newName) return;
+
+  const newAddress = prompt(
+    "Enter Address",
+    user.address || ""
+  );
+
+  try {
+    const res = await axios.put(
+      `${BASE_URL}/api/auth/update-profile/${user._id}`,
+      {
+        name: newName,
+        address: newAddress,
+      }
+    );
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(res.data.user)
+    );
+
+    alert("Profile Updated");
+
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
   return (
     <div className="d-flex">
 
@@ -139,18 +179,24 @@ function Home() {
       </button>
 
       {/* Logout */}
-      <button
-        className="btn btn-danger"
-        style={{
-          position: "fixed",
-          top: "10px",
-          right: "10px",
-          zIndex: 1000,
-        }}
-        onClick={handleLogout}
-      >
-        Logout
-      </button>
+     <button
+  className="btn btn-light"
+  style={{
+    position: "fixed",
+    top: "10px",
+    right: "10px",
+    width: "50px",
+    height: "50px",
+    borderRadius: "50%",
+    zIndex: 1000,
+    fontSize: "22px",
+  }}
+  onClick={() =>
+    setShowProfile(!showProfile)
+  }
+>
+  👤
+</button>                                                             
 
       {/* Sidebar */}
       {showSidebar && (
@@ -177,6 +223,65 @@ function Home() {
           )}
         </div>
       )}
+
+
+{showProfile && (
+  <div
+    style={{
+      position: "fixed",
+      right: 0,
+      top: 0,
+      width: "320px",
+      height: "100vh",
+      backgroundColor: "white",
+      padding: "20px",
+      borderLeft: "1px solid #ddd",
+      boxShadow:
+        "-2px 0 10px rgba(0,0,0,0.1)",
+      zIndex: 999,
+    }}
+  >
+    <div className="text-center">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+        alt="profile"
+        style={{
+          width: "100px",
+          height: "100px",
+          borderRadius: "50%",
+        }}
+      />
+
+      <h4 className="mt-3">
+        {user?.name}
+      </h4>
+
+      <p>{user?.email}</p>
+
+      <p>
+        <strong>Address:</strong>
+        <br />
+        {user?.address || "Not Added"}
+      </p>
+
+      <button
+        className="btn btn-warning w-100 mb-3"
+        onClick={handleEditProfile}
+      >
+        Edit Profile
+      </button>
+
+      <button
+        className="btn btn-danger w-100"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+)}
+
+
 
       {/* MAIN */}
       <div className="flex-grow-1">
