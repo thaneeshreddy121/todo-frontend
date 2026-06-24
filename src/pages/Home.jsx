@@ -162,7 +162,8 @@ const handleEditProfile = async () => {
 
 
   return (
-    <div className="d-flex">
+    <>
+        <div className="d-flex">
 
       {/* Sidebar Toggle */}
       <button
@@ -200,21 +201,15 @@ const handleEditProfile = async () => {
 
       {/* Sidebar */}
       {showSidebar && (
-        <div
-          className="border-end p-3"
-          style={{
-            width: "250px",
-            minHeight: "100vh",
-            backgroundColor: "#f8f9fa",
-          }}
-        >
+     
+     <div className="history-sidebar">
           <h4 className="text-muted">History</h4>
 
           {history.length === 0 ? (
             <p>No Tasks</p>
           ) : (
             history.map((item) => (
-              <div key={item._id} className="border rounded p-2 mb-2">
+              <div key={item._id} className="history-card">
                 <strong>{item.name}</strong>
                 <br />
                 <small>{item.dueDate}</small>
@@ -226,21 +221,7 @@ const handleEditProfile = async () => {
 
 
 {showProfile && (
-  <div
-    style={{
-      position: "fixed",
-      right: 0,
-      top: 0,
-      width: "320px",
-      height: "100vh",
-      backgroundColor: "white",
-      padding: "20px",
-      borderLeft: "1px solid #ddd",
-      boxShadow:
-        "-2px 0 10px rgba(0,0,0,0.1)",
-      zIndex: 999,
-    }}
-  >
+  <div className="profile-sidebar">
     <div className="text-center">
       <img
         src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -285,7 +266,13 @@ const handleEditProfile = async () => {
 
       {/* MAIN */}
       <div className="flex-grow-1">
-        <center className="todo-container">
+      <center
+  className="todo-container"
+  style={{
+    maxWidth: "1000px",
+    margin: "40px auto",
+  }}
+>
           <AppName />
 
           <AddTodo onNewItem={handleNewItem} />
@@ -299,7 +286,17 @@ const handleEditProfile = async () => {
           />
         </center>
       </div>
+
+
+
     </div>
+
+    <footer className="footer">
+  <p>
+    © 2026 Smart Todo Manager | Built by Thaneesh
+  </p>
+</footer>
+</>
   );
 }
 

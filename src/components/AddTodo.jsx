@@ -1,44 +1,55 @@
 import { useState } from "react";
 
 function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState();
-  const [dueDate, setDueDate] = useState();
-
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
-
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
+  const [todoName, setTodoName] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   const handleAddButtonClicked = () => {
     onNewItem(todoName, dueDate);
-    setDueDate("");
     setTodoName("");
+    setDueDate("");
   };
 
   return (
-    <div className="container text-center">
-      <div className="row kg-row">
-        <div className="col-6">
+    <div
+      style={{
+        background: "rgba(255,255,255,0.15)",
+        backdropFilter: "blur(10px)",
+        padding: "25px",
+        borderRadius: "20px",
+        marginBottom: "30px",
+      }}
+    >
+      <div className="row g-3">
+        <div className="col-md-6">
           <input
             type="text"
-            placeholder="Enter Todo Here"
+            placeholder="📝 Enter your task"
+            className="form-control"
             value={todoName}
-            onChange={handleNameChange}
+            onChange={(e) =>
+              setTodoName(e.target.value)
+            }
           />
         </div>
-        <div className="col-4">
-          <input type="date" value={dueDate} onChange={handleDateChange} />
+
+        <div className="col-md-4">
+          <input
+            type="date"
+            className="form-control"
+            value={dueDate}
+            onChange={(e) =>
+              setDueDate(e.target.value)
+            }
+          />
         </div>
-        <div className="col-2">
+
+        <div className="col-md-2">
           <button
-            type="button"
-            className="btn btn-success kg-button"
+            className="btn btn-success w-100"
             onClick={handleAddButtonClicked}
           >
-            Add
+            ➕ Add
           </button>
         </div>
       </div>

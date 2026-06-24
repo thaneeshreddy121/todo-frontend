@@ -6,29 +6,59 @@ function TodoItem({
   onEditClick,
 }) {
   return (
-    <div className="container">
-      <div className="row kg-row">
-        <div className="col-5">{todoName}</div>
+    <div
+      style={{
+        background: "white",
+        borderRadius: "20px",
+        padding: "20px",
+        marginBottom: "20px",
+        boxShadow:
+          "0 10px 25px rgba(0,0,0,0.12)",
+        transition: "0.3s",
+      }}
+    >
+      <div className="d-flex justify-content-between align-items-center flex-wrap">
 
-        <div className="col-3">{todoDate}</div>
-
-        <div className="col-2">
-          <button
-            type="button"
-            className="btn btn-warning kg-button"
-            onClick={() => onEditClick(todoId)}
+        <div>
+          <h4
+            style={{
+              fontWeight: "700",
+              marginBottom: "10px",
+            }}
           >
-            Edit
-          </button>
+            📌 {todoName}
+          </h4>
+
+         <div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    color: "#666",
+  }}
+>
+  <span>📅</span>
+  <span>{todoDate}</span>
+</div>
         </div>
 
-        <div className="col-2">
+        <div className="d-flex gap-2 mt-3 mt-md-0">
           <button
-            type="button"
-            className="btn btn-danger kg-button"
-            onClick={() => onDeleteClick(todoId)}
+            className="btn btn-warning"
+            onClick={() =>
+              onEditClick(todoId)
+            }
           >
-            Delete
+            ✏️ Edit
+          </button>
+
+          <button
+            className="btn btn-danger"
+            onClick={() =>
+              onDeleteClick(todoId)
+            }
+          >
+            🗑 Delete
           </button>
         </div>
       </div>
