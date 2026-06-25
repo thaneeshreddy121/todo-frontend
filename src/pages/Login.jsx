@@ -58,10 +58,10 @@ function Login() {
 
       <p className="mt-3">
         Don't have an account?{" "}
-        <Link to="/signup">Signup</Link>
+        <Link className="blue" to="/signup">Signup</Link>
       </p>
 
-      <Link to="/forgot">Forgot Password?</Link>
+      <Link className="blue" to="/forgot">Forgot Password?</Link>
     </div>
   );
 }

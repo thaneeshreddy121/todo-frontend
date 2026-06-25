@@ -107,7 +107,7 @@ if (
       </button>
 
       <p className="mt-3">
-        Already have an account? <Link to="/">Login</Link>
+        Already have an account? <Link className="blue" to="/">Login</Link>
       </p>
     </div>
   );
