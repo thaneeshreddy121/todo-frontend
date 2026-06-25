@@ -291,11 +291,11 @@ const handleEditProfile = async () => {
 
     </div>
 
-    <footer className="footer">
+    {/* <footer className="footer">
   <p>
     © 2026 Smart Todo Manager | Built by Thaneesh
   </p>
-</footer>
+</footer> */}
 </>
   );
 }
